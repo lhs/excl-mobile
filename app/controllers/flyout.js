@@ -84,8 +84,8 @@ function closeMenu(e) {
 }
 
 function openHomePage(e) {
-	Alloy.Globals.navController.home();
 	closeMenu();
+	Alloy.Globals.navController.home();
 }
 
 function openExhibitsPage(e) {
@@ -131,11 +131,13 @@ function disableAgeFilter() {
 
 function showEditAgeOption() {
 	$.viewRowCollapsible.height = "50dip";
+	$.viewRowCollapsible.visible = true;
 	$.toggleView.show();
 }
 
 function hideEditAgeOption() {
 	$.viewRowCollapsible.height = 0;
+	$.viewRowCollapsible.visible = false;
 	$.toggleView.hide();
 }
 

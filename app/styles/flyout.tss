@@ -14,7 +14,7 @@
 	separatorStyle: 'NONE',
 	separatorColor: 'transparent',
 	backgroundColor: Alloy.CFG.excl.colors.flyoutColor,
-	width: "50%",
+	width: Titanium.UI.FILL,
 	layout: "vertical"
 },
 
@@ -29,11 +29,11 @@
 
 ".rowContainer": {
 	layout: 'horizontal',
-	height: Ti.UI.FILL
 }
 
 "#viewRowCollapsible":{
-	height: '0'
+	height: '0',
+	visible: false
 },
 
 ".viewRowIndented":{
@@ -47,6 +47,10 @@
 	height: "20dip"
 },
 
+".rowIcon[formFactor=tablet]":{
+	top:"14dip"
+}
+
 ".clearPageProtecterView": {
 	left: 0,
 	width: "50%",
@@ -55,7 +59,7 @@
 ".rowLabel":{
 	top: "6dip",
 	left: '12dp',
-	height: "20dip",
+	height: Ti.UI.SIZE,
 	width: Ti.UI.FILL,
 	font:{
 		fontSize: "15dip",
@@ -74,7 +78,7 @@
 ".rowLabelIndented":{
 	top: "6dip",
 	left: "12dip",
-	height: "20dip",
+	height: Titanium.UI.SIZE,
 	font:{
 		fontSize: "15dip",
 		fontFamily: Alloy.CFG.excl.defaultGlobalFontFamily

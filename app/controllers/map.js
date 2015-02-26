@@ -23,6 +23,17 @@ var analyticsPageLevel = "Information";
 var url = Alloy.Globals.rootWebServiceUrl;
 var json = Alloy.Globals.museumJSON;
 
+// values for pinching to zoom
+var baseWidth;
+var baseHeight;
+// values for panning
+var currentX;
+var currentY;
+var deltaX;
+var deltaY;
+var dragging = false;
+var olt = Titanium.UI.create2DMatrix();
+
 function setPathForLibDirectory(libFile) {
 	if ( typeof Titanium == 'undefined') {
 		lib = require("../../lib/" + libFile);
@@ -60,14 +71,14 @@ exports.getAnalyticsPageLevel = getAnalyticsPageLevel;
 
 $.navBar.setPageTitle("Map");
 
-$.Map.url=json.data.museum.map;
 
-// cache.getFile({
-	// url: json.data.museum.map,
-	// onsuccess: function(filePath, request) {
-		// // wrap filePath (image) in html and assign to webview url
-	// }
-// });
+cache.getFile({
+	url: json.data.museum.map,
+	onsuccess: function(filePath, request) {
+		var html = '<html><head></head><body><img src="' + filePath + '" style="width:100%;"></body></html>';//<meta name="viewport" content="maximum-scale=1">
+		$.Map.html = html;
+	}
+});
 
 function hideSpinner(){
 	spinner.hide();

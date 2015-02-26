@@ -2,7 +2,9 @@
 	<Window class="container">
 		<View id="mainView">
 			<Widget id="navBar" src="navigationBar"/>
-			<WebView id="Map" onLoad = "hideSpinner"></WebView>
+			<View id="mapWrapper">
+				<WebView id="Map" onLoad = "hideSpinner" scalesPageToFit="true" borderRadius="1"></WebView>
+			</View>
 		</View>
 	</Window>
 </Alloy>

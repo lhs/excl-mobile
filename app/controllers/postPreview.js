@@ -120,10 +120,10 @@ function createPostView(post) {
 	var container = viewService.createCustomView(args);
 	if (detectDevice.isTablet()) {
 		container.top = "25dip";
-		container.height = "300dip";
+		container.height = "250dip"; //container.height = "300dip";
 	} else {
 		container.top = "15dip";
-		container.height = "200dip";
+		container.height = "100dip"; //container.height = "200dip";
 	}
 	
 	sectionIndexSecondary = sectionIndex % Alloy.CFG.excl.colors.sectionSecondaryColors.length;
@@ -135,11 +135,15 @@ function createPostView(post) {
 	};
 	var postContainer = viewService.createCustomView(args);
 	if (detectDevice.isTablet()) {
-		postContainer.height = "300dip";
+		postContainer.height = "250dip"; //postContainer.height = "300dip";
 	} else {
-		postContainer.height = "200dip";
+		postContainer.height = "100dip"; //postContainer.height = "200dip";
 	}
 	
+	
+	//GUI change: removing header with post title
+	//create the post title header with colored background
+	/*
 	sectionIndexPrimary = sectionIndex % Alloy.CFG.excl.colors.sectionPrimaryColors.length;
 	args = {
 		height : "50dip",
@@ -175,20 +179,43 @@ function createPostView(post) {
 			fontFamily : Alloy.CFG.excl.defaultGlobalFontFamily
 		};
 	}
+*/
 
+	//create the preview container
 	args = {
-		layout : "horizonal",
+		//layout : "horizontal",
+		height: "100%",
 		width : "95%",
-		top : "2%",
-		bottom : "10%"
+		verticalAlign: "top",
+		// backgroundColor: "#0ff"
+		//top : "12%",
+		//bottom : "10%"
 	};
 	var previewContainer = viewService.createCustomView(args);
-	if (detectDevice.isTablet()) {
+	/*if (detectDevice.isTablet()) {
 		previewContainer.height = "250dip";
 	} else {
-		previewContainer.height = "150dip";
-	}
+		previewContainer.height = "125dip";
+	}*/
+	
+	
+	//create a container for the image, prevents image from being longer than 45% of parent container
+	args = {
+		// layout : "horizontal",
+		left: "0",
+		//top : "10%",
+		//bottom : "10%",
+		height: Ti.UI.SIZE,
+		//height: "80%",
+		width: "45%",
+		// backgroundColor: "#F00",
+		verticalAlign: "center",
+		//center: {x: "auto", y: "50%"}
+	};
+	var imageContainer = viewService.createCustomView(args);
 
+	//GUI change: removing arrow
+	/*
 	args = {
 		top : "60%"
 	};
@@ -204,29 +231,38 @@ function createPostView(post) {
 		navArrow.height = "20dip";
 		navArrow.width = "20dip";
 	}
+	*/
+	
+	//create the view that contains the post image itself
 	args = {
 		left : "0",
-		width : "45%",
-		top : "10%",
-		bottom : "10%",
-		image : post.get("image"),
-		height : "70%"
+		top : "0%", //top : "10%",
+		bottom : "0%", //bottom : "10%",
+		image : post.get("image"), // 'http://www.team2bit.com/playpads/360x200.png',
+    	width : "auto", //keep aspect ratio
+    	height : "auto", //keep aspect ratio
+    	// backgroundColor: "#0f0",
+    	verticalAlign: "center"
+    	//height : "80%",
+		//width : "45%",
 	};
 	var postImage = viewService.createCustomImageView(args);
 	if (!postImage.image) {
 		iconService.setIcon(postImage, "placeholder.png");
 	}
 
+ 	//create the view that contains the post text
 	args = {
 		left : "46%",
-		text : post.get("text"),
+		text : post.get("name"),//post.get("text"), //replace post text with post title
 		color : Alloy.CFG.excl.colors.darkFontColor,
 		font : {
-			fontSize : "16dip",
+			fontSize : "15dip",
 			fontFamily : Alloy.CFG.excl.defaultGlobalFontFamily
 		},
-		top : "10%",
-		height : "70%"
+		//top : "10%",
+		height : Ti.UI.SIZE,
+		// backgroundColor:"#f0f"
 	};
 	var postText = labelService.createCustomLabel(args);
 	if (detectDevice.isTablet()) {
@@ -239,14 +275,16 @@ function createPostView(post) {
 		postText.text = "Click here to dive into this activity!";
 	}
 
-	postContainer.add(header);
-	header.add(headerWrap);
-	headerWrap.add(headerText);
+	//postContainer.add(header);
+	//header.add(headerWrap);
+	//headerWrap.add(headerText);
 	postContainer.add(previewContainer);
-	previewContainer.add(postImage);
+	imageContainer.add(postImage);
+	previewContainer.add(imageContainer);
 	previewContainer.add(postText);
 	container.add(postContainer);
-	container.add(navArrow);
+	//GUI change: removing arrow
+	//container.add(navArrow);
 
 	if (OS_IOS) {
 		$.backgroundContainer.bottom = "48dip";

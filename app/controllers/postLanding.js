@@ -33,7 +33,6 @@ var sharingTextService = new sharingTextService();
 sharingImageService = setPathForLibDirectory('sharing/sharingImageService');
 var sharingImageService = new sharingImageService();
 var cache = require('remoteDataCache');
-
 var detectDevice = setPathForLibDirectory('customCalls/deviceDetectionService');
 detectDevice = new detectDevice();
 var loadingSpinner = setPathForLibDirectory('loadingSpinner/loadingSpinner');
@@ -43,6 +42,8 @@ var loadingSpinnerView = Ti.UI.createView();
 
 var imageFilePathAndroid = "/images/icons_android/";
 var imageFilePathIOS = "/images/icons_ios/";
+
+var UriParser = require('parseUri/parseUri');
 
 /**
  * Analytics specific information
@@ -133,6 +134,7 @@ function createPlainRowWithHeight(rowHeight) {
 
 function displayThereAreNoCommentsToDisplayText() {
 	$.noComments.height = Ti.UI.SIZE;
+	$.noComments.visible = true;
 }
 
 function addCommentToView(commentText, commentDate) {
@@ -189,6 +191,7 @@ function displayComments(comments) {
 
 	if (comments.length > commentsLengthLimit) {
 		$.showMoreComments.height = Ti.UI.SIZE;
+		$.showMoreComments.visible = true;
 		// if clicked, hide it and show the other comments
 		$.showMoreComments.addEventListener('click', function(e) {
 			for (var i = commentsLengthLimit; i < comments.length; i++) {
@@ -310,20 +313,32 @@ function setCommentSubmittedMessage() {
 function initializePage() {
 	setPageTitle(post_content.section);
 	hideMenuBtnIfKioskMode();
-	
 	var post_header_url = post_content.post_header_url;
-	cache.getFile({url: post_header_url, onsuccess: function(url, request) {
-		switch (post_content.post_header_type) {
-			case "image":
-				$.headerRow.add(getRowContentsForImage(url));
-				break;
-			case "video":
-				$.headerRow.add(getRowContentsForVideo(url));
-				break;
-			default:
-				break;
+	var parsed = UriParser.parseUri(post_header_url);
+	var filename = parsed.file;
+	cache.getFile({
+		url: post_header_url,
+		localFileName: parsed.file,
+		onsuccess: function(url, request) {
+			var theReq = request;
+			var lfn = request.localFileName;
+			var headerContent = null;
+			switch (post_content.post_header_type) {
+				case "image":
+					headerContent = getRowContentsForImage(url);
+					break;
+				case "video":
+					headerContent = getRowContentsForVideo(url, post_header_url);
+					break;
+				default:
+					break;
+			}
+			if(headerContent) {
+				$.headerRow.remove($.placeholderHeaderImage);
+				$.headerRow.add(headerContent);
+			}
 		}
-	}});
+	});
 
 	if (post_content.post_body) {
 		Ti.App.addEventListener('app:openInBrowser', openInBrowser);
@@ -434,20 +449,11 @@ function shareText(e) {
 function sharePhoto(e) {
 	sharingImageService.setIconBusy($.sharePhotoButton);
 	postTags = sharingImageService.getPostTags(post_content);
-	cameraService.takePicture(postTags, e.source, $.postLanding);
+	cameraService.takePicture(postTags, e.source, $.sharePhotoButton);
 	sharingImageService.setIconReady($.sharePhotoButton);
 }
 
-function getRowContentsForVideo(url) {
-	if (OS_ANDROID) {
-		return getRowContentsForVideoAndroid(url);
-	}
-	if (OS_IOS) {
-		return getRowContentsForVideoiOS(url);
-	}
-}
-
-function getRowContentsForVideoAndroid(url) {
+function getRowContentsForVideo(cache_url, orig_url) {
 	var thumbnailView = Ti.UI.createView({ height: Ti.UI.SIZE	});
 	$.addClass(thumbnailView, "headerImage");
 	var thumbnailImageView = Ti.UI.createImageView({
@@ -461,46 +467,92 @@ function getRowContentsForVideoAndroid(url) {
 	thumbnailView.add(thumbnailImageView);
 	thumbnailView.add(playTriangle);
 	//Add event listener- when thumbnail is clicked, open fullscreen video
-	thumbnailView.addEventListener('click', function(e) {
+	
+	var thumbnailEvtListener;
+	if(OS_ANDROID) {
+		thumbnailEvtListener = getVideoEventListenerAndroid(cache_url);
+	}
+	else if(OS_IOS) {
+		thumbnailEvtListener = getVideoEventListeneriOS(cache_url, orig_url);
+	}
+	
+	thumbnailView.addEventListener('click', thumbnailEvtListener);
+	return thumbnailView;
+}
+
+function getVideoEventListenerAndroid(url) {
+	return function(e) {
 		var video = Titanium.Media.createVideoPlayer({
 			url : url,
-			fullscreen : true,
+			// fullscreen : true,
 			autoplay : true
 		});
 		
 		video.addEventListener('load', function(e) {
 			Alloy.Globals.analyticsController.trackEvent("Videos", "Play", url, 1);
 		});
-
-		doneButton = Ti.UI.createButton({
+	
+		var doneButton = Ti.UI.createButton({
 			title : "Done",
 			top : "0dip",
 			height : "40dip",
 			left : "10dip",
 		});
-
+	
 		doneButton.addEventListener('click', function(e) {
 			video.hide();
 			video.release();
 			video = null;
 		});
 		video.add(doneButton);
-
-	});
-	return thumbnailView;
+	};
 }
 
-function getRowContentsForVideoiOS(url) {
-	var video = Titanium.Media.createVideoPlayer({
-		url : url,
-		fullscreen : false,
-		autoplay : false,
-	});
-	$.addClass(video, "headerVideo");
-	video.addEventListener('load', function(e) {
-		Alloy.Globals.analyticsController.trackEvent("Videos", "Play", url, 1);
-	});
-	return video;
+function getVideoEventListeneriOS(cache_url, orig_url) {
+	return function(e) {
+		var videoWindow = Titanium.UI.createWindow({
+			title:'Video Player',
+			backButtonTitle: 'Done',
+			barColor: '#000',
+			backgroundColor: '#000',
+			zIndex: 999999999
+		});
+		
+		var videoPlayer = Titanium.Media.createVideoPlayer({
+			url: cache_url,
+			fullscreen: true,
+			autoplay: true,
+			mediaControlStyle: Titanium.Media.VIDEO_CONTROL_FULLSCREEN
+		});
+		
+		videoPlayer.addEventListener(
+			'complete',
+			function(e) {
+				Ti.API.log("vid complete. reason = " + e.reason);
+				//if(e.reason == Ti.Media.VIDEO_FINISH_REASON_USER_EXITED) {
+					videoPlayer.release();
+					videoWindow.close();
+				//}
+			}
+		);
+		videoPlayer.addEventListener(
+			"playing",
+			function(e) {
+				var evt = e;
+				Ti.API.log('vid playing event');
+			}
+		);
+		
+		var doneButton = Ti.UI.createButton({
+			title : "Done",
+			top : "0dip",
+			height : "40dip",
+			left : "10dip",
+		});
+		videoWindow.add(videoPlayer);
+		videoWindow.open();
+		
+	};
 }
 
 function getRowContentsForImage(url) {

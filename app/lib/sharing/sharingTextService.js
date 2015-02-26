@@ -86,7 +86,7 @@ sharingTextService.prototype.initiateIntentText = function(postTags, shareTextBu
 	if (OS_ANDROID) {
 		intentService.sendIntentTextAndroid(postTags);
 	} else if (OS_IOS) {
-		intentService.sendIntentTextiOS(postTags);
+		intentService.sendIntentTextiOS(postTags, shareTextButton);
 	}
 	sharingTextService.prototype.setIconReady(shareTextButton);
 };

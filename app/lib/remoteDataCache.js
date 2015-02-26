@@ -34,7 +34,7 @@ function init() {
 	expiration = 2 * (DAY_IN_MILLISECONDS / 3);	// 16 hours
 };
 
-function constructRequest(type, url, onsuccess, onerror, onstream) {
+function constructRequest(type, url, onsuccess, onerror, onstream, localFileName) {
 	var request = {
 		type: type,
 		made: (new Date()).getTime(),
@@ -44,7 +44,8 @@ function constructRequest(type, url, onsuccess, onerror, onstream) {
 		onsuccess: onsuccess,
 		onerror: onerror,
 		onstream: onstream,
-		response: null
+		response: null,
+		localFileName: localFileName
 	};
 	return request;
 };
@@ -128,7 +129,13 @@ function download(request) {
 				timeRetrieved: now.getTime()
 			});
 			if(request.type === FILE) {
-				var file = Ti.Filesystem.createTempFile();
+				var file;
+				if(request.localFileName != null) {
+					file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, request.localFileName);
+				}
+				else {
+					var file = Ti.Filesystem.createTempFile();
+				}
 				file.write(this.responseData);
 				request.response.save({
 					localPath: file.nativePath
@@ -199,7 +206,7 @@ function getFile(args) {
 		error(request);
 	}
 	else {
-		var request = constructRequest(FILE, args.url, args.onsuccess, args.onerror, args.onstream);
+		var request = constructRequest(FILE, args.url, args.onsuccess, args.onerror, args.onstream, args.localFileName);
 		submit(request);
 	}
 };

@@ -5,7 +5,9 @@
 			<View id="postLandingViewBody">
 				<ScrollView id="scroller">
 					<View id="tableView">
-						<View id="headerRow" class="autoHeight"></View>
+						<View id="headerRow" class="autoHeight">
+							<ImageView id="placeholderHeaderImage" class="headerImage"/>
+						</View>
 						<View id="socialMediaButtonsRow" class="autoHeight" autoStyle="true">
 							<View id="centeredButtons" class="centeredButtons">
 								<Button id="commentingButton" class="socialMediaButtonShown" onClick="comment" autoStyle="true"></Button>

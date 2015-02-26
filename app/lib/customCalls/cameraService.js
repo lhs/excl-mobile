@@ -94,13 +94,17 @@ cameraService.prototype.takePicture = function(postTags, shareImageButton, ancho
 						Ti.App.Properties.setString("image", imageFile.nativePath);
 						imageFilePath = imageFile.nativePath;
 						if (OS_ANDROID) {
-							loadingSpinner.hide();
+							// loadingSpinner.hide();
 							intentService.sendIntentImageAndroid(postTags, imageFilePath);
 						} else if (OS_IOS) {
+							/*
 							fileNameInstagram = "_temp.ig";
 							imageFileInstagram = Ti.Filesystem.getFile(Ti.Filesystem.tempDirectory, fileNameInstagram);
 							imageFileInstagram.write(event.media);
 							intentService.sendIntentImageiOS(postTags, imageFilePath, imageFileInstagram.getNativePath(), instagramAnchor);
+							*/
+							// WIP WIP WIP
+							intentService.sendIntentImageiOS(postTags, imageFilePath, anchor);
 						}
 					}
 				},

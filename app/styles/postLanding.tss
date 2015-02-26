@@ -2,13 +2,14 @@
 ".container": {
 	navBarHidden: true,
 	fullscreen: true,
-	backgroundColor: Alloy.CFG.excl.colors.pageBackgroundColor
+	backgroundColor: Alloy.CFG.excl.colors.pageBackgroundColor,
+	height: Titanium.UI.FILL
 }
 
 "#postLandingView": {
-	height: Ti.UI.FILL,
-	width: Ti.UI.FILL,
-	layout: "vertical"
+	layout: "vertical",
+	height: Titanium.UI.FILL,
+	width: Titanium.UI.FILL
 }
 
 "#postLandingViewBody": {
@@ -50,7 +51,8 @@
 }
 
 ".headerImage": {
-	width: Ti.UI.FILL
+	width: Ti.UI.FILL,
+	height: "200dip"
 }
 
 ".headerImage[formFactor=tablet]": {}
@@ -180,12 +182,14 @@
 
 "#showMoreComments": {
 	color: Alloy.CFG.excl.colors.accentButtonColor,
-	height: "0dip"
+	height: "0dip",
+	visible: false
 }
 
 "#noComments": {
 	color: Alloy.CFG.excl.colors.accentBorderColor,
-	height: "0dip"
+	height: "0dip",
+	visible: false
 }
 
 "#commentsView": {

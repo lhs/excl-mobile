@@ -80,7 +80,7 @@ function sendJsonToUrl(url, jsonData, onSuccess) {
 
 	if (client) {
 		client.setRequestHeader("Content-Type", "application/json");
-		client.open("POST", url, false);
+		client.open("POST", url);//, false);
 		client.send(JSON.stringify(jsonData));
 	}
 

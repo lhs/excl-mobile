@@ -21,6 +21,9 @@
 function intentService(){};
 //Handles all interaction between the app and other apps on the device
 
+// icons to remove from iOS sharing options view
+var removeIcons = 'print,copy,contact,camera';
+
 intentService.prototype.sendIntentTextAndroid = function(postTags){
 	var intentText = Ti.Android.createIntent({
 		action : Ti.Android.ACTION_SEND,
@@ -31,17 +34,29 @@ intentService.prototype.sendIntentTextAndroid = function(postTags){
 	Ti.Android.currentActivity.startActivity(Ti.Android.createIntentChooser(intentText, "Send message via"));
 };
 
-intentService.prototype.sendIntentTextiOS = function(postTags){
+intentService.prototype.sendIntentTextiOS = function(postTags, anchor){
 	//Use TiSocial.Framework module to share text
 	var Social = require('dk.napp.social');
-
+	
 	if (Social.isActivityViewSupported()) {
-		Social.activityView({
-			text : postTags
-		});
+		if(Ti.Platform.osname == 'ipad') {
+			Social.activityPopover({
+				text : postTags,
+				view: anchor,
+				removeIcons: removeIcons
+			});
+		}
+		else {
+			Social.activityView({
+				text: postTags,
+				removeIcons: removeIcons
+			});
+		}
 	} else {
 		alert("Text sharing is not available on this device"); //For some very old versions of iOS
 	}
+	
+	
 };
 
 intentService.prototype.sendIntentImageAndroid = function(postTags, imageFilePath){
@@ -59,10 +74,21 @@ intentService.prototype.sendIntentImageiOS = function(postTags, imageFilePath, i
 	//Use TiSocial.Framework module to send image to other apps
 	var Social = require('dk.napp.social');
 	if (Social.isActivityViewSupported()) {
-		Social.activityView({
-			image : imageFilePath,
-			text : postTags
-		});
+		if(Ti.Platform.osname == 'ipad') {
+			Social.activityPopover({
+				image : imageFilePath,
+				text : postTags,
+				view: instagramAnchor,
+				removeIcons: removeIcons
+			});
+		}
+		else {
+			Social.activityView({
+				image : imageFilePath,
+				text : postTags,
+				removeIcons: removeIcons
+			});
+		}
 	} else {
 		alert("Photo sharing is not available on this device");
 	}

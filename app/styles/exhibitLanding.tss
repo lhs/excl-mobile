@@ -36,23 +36,24 @@
 }
 
 "#componentScrollViewHeading[formFactor=tablet]":{
-	height: "75dip"
+	height: "150dip"
 }
 
 "#componentScrollViewLabel":{
 	text: "Select an Activity!",
 	color: Alloy.CFG.excl.colors.darkFontColor,
+    left: "5dip",
 	font: {
-		fontWeight: 'bold',
-		fontSize: "20dip",
+		//fontWeight: 'bold',
+		fontSize: "14dip",
 		fontFamily: Alloy.CFG.excl.defaultGlobalFontFamily
 	}
 }
 
 "#componentScrollViewLabel[formFactor=tablet]":{
 	font:{
-		fontWeight: 'bold',
-		fontSize: "40dip",
+		//fontWeight: 'bold',
+		fontSize: "24dip",
 		fontFamily: Alloy.CFG.excl.defaultGlobalFontFamily
 	}
 }
@@ -91,6 +92,7 @@
 	width: "94%",
 	color: Alloy.CFG.excl.colors.darkFontColor,
 	font: {
+		fontSize: "18dip",
 		fontFamily: Alloy.CFG.excl.defaultGlobalFontFamily
 	},
 }

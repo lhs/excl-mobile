@@ -7,20 +7,12 @@
 			</ScrollableView>
 			<View id="infoView">
 				<View id="bottomView">
-					<View id="componentScrollViewHeading" class="headingRow">
+					<View id="componentScrollViewHeading" class="exhibitInfoRow">
 						<Label id="componentScrollViewLabel"/>
 					</View>
 					<ScrollView id="componentScrollView"/>
 				</View>
-				<View id="topView">
-					<View id="headingLabelView" class="headingRow">
-						<Label id="headingLabel" class="headingText"/>
-						<ImageView id="arrowIcon"/>
-					</View>
-					<ScrollView id="exhibitInfoScrollView">
-						<Label id="exhibitInfoLabel"/>
-					</ScrollView>
-				</View>
+
 			</View>
 		</View>
 	</Window>

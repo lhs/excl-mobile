@@ -98,11 +98,15 @@ function addSpinner() {
 	}
 	spinner.show();
 	$.exhibitLanding.add(loadingSpinnerView);
+	
+	Ti.API.log("exhibitLanding show spinner");
 }
 
 function hideSpinner() {
 	spinner.hide();
 	$.exhibitLanding.remove(loadingSpinnerView);
+	
+	Ti.API.log("exhibitLanding hide spinner");
 }
 
 function init() {
@@ -179,9 +183,10 @@ function createExhibitsCarousel(exhibits) {
 	}
 
 	$.exhibitsCarousel.setCurrentPage(0);
-	$.headingLabel.text = "Tap to Explore!";
+	//$.headingLabel.text = "Tap to Explore!";  //OBSOLETE
 	//"Explore This " + json.data.museum.exhibit_label;
-	$.exhibitInfoLabel.text = exhibits[0].description;
+	//$.exhibitInfoLabel.text = exhibits[0].description;  //OBSOLETE
+	$.componentScrollViewLabel.text = exhibits[0].description;
 	
 	if(OS_ANDROID){
 		resizeExhibitCarouselAndroid();
@@ -470,29 +475,35 @@ function getComponentTitleLabelHeight() {
 }
 
 function addFunctionalityToHeadingBar(exhibits) {
+	//OBSOLETE
+	/*
 	$.headingLabelView.addEventListener("click", function(e) {
 		onExhibitsClick(exhibits);
 	});
 
 	$.arrowIcon.image = iconService.getImageFilename("arrow3.png");
 	// TODO decide on Arrow
+	*/
 }
 
 function onExhibitsClick(exhibits) {
-	$.exhibitInfoScrollView.scrollTo(0, 0);
+	//$.exhibitInfoScrollView.scrollTo(0, 0);   //OBSOLETE
 	if (!isBottomViewShowing()) {
 		var pageIndex = $.exhibitsCarousel.currentPage;
-		$.exhibitInfoLabel.text = exhibits[pageIndex].description;
+		//$.exhibitInfoLabel.text = exhibits[pageIndex].description;   //OBSOLETE
+		$.componentScrollViewLabel.text = exhibits[pageIndex].description;
 		animateTopViewDown();
 
 	} else {
-		$.headingLabel.text = "Tap to Explore!";
+		//$.headingLabel.text = "Tap to Explore!";   //OBSOLETE
 		//"Explore This " + json.data.museum.exhibit_label;
 		animateTopViewUp();
 	}
 }
 
 function animateTopViewDown() {
+	//OBSOLETE
+	/*
 	var headingLabelHeight = makeDefaultUnitsFromDip($.headingLabelView.height);
 	var topMeasurement = $.infoView.toImage().height - headingLabelHeight;
 
@@ -512,10 +523,12 @@ function animateTopViewDown() {
 		$.topView.top = topMeasurement;
 		$.headingLabel.text = "Go Back";
 	}, animationDuration);
-
+*/
 }
 
 function animateTopViewUp() {
+  	//OBSOLETE
+  	/*
 	var animationDuration = 300;
 
 	$.arrowIcon.animate({
@@ -531,14 +544,19 @@ function animateTopViewUp() {
 	setTimeout(function(e) {
 		$.topView.top = 0;
 	}, animationDuration);
+	*/
 }
 
 function isBottomViewShowing() {
+	return true;
+	//OBSOLETE
+	/*
 	if (stripUnitsOffMeasurement($.topView.top) == 0) {
 		return false;
 	} else {
 		return true;
 	}
+	*/
 }
 
 function makeDefaultUnitsFromDip(str) {
@@ -557,25 +575,32 @@ function stripUnitsOffMeasurement(str) {
 
 function onExhibitsScroll(e, exhibits) {
 	var index = $.exhibitsCarousel.currentPage;
-	$.headingLabel.text = "Tap to Explore!";
+	//$.headingLabel.text = "Tap to Explore!";   //OBSOLETE
 	//"Explore This " + json.data.museum.exhibit_label;
-	$.exhibitInfoLabel.text = exhibits[index].description;
+	//$.exhibitInfoLabel.text = exhibits[index].description;   //OBSOLETE
+	$.componentScrollViewLabel.text = exhibits[index].description;
+	
 	animateTopViewUp();
 	setTimeout(function() {
 		changeVisibleComponents(e);
 	}, 300);
 
-	$.exhibitInfoScrollView.scrollTo(0, 0);
+	//$.exhibitInfoScrollView.scrollTo(0, 0);   //OBSOLETE
 }
 
 function changeVisibleComponents(e) {
-	componentsInExhibit[currExhibitId].width = 0;
+	/*componentsInExhibit[currExhibitId].width = 0;
 	componentsInExhibit[e.view.itemId].width = Ti.UI.SIZE;
+	*/
+	$.componentScrollView.remove(componentsInExhibit[currExhibitId]);
 	currExhibitId = e.view.itemId;
+	Ti.API.log("Changing to exhibit id " + currExhibitId);
+	$.componentScrollView.add(componentsInExhibit[currExhibitId]);
+	$.componentScrollView.scrollTo(0, 0);
 }
 
 function createComponentsScrollView(exhibits) {
-
+// TODO: load these as-needed, not all at once to prevent ios 8 crash
 	currExhibitId = exhibits[0].id;
 
 	for (var i = 0; i < exhibits.length; i++) {
@@ -599,15 +624,17 @@ function createComponentsScrollView(exhibits) {
 			componentsInExhibit[exhibits[i].id].add(component);
 		}
 
-		$.componentScrollView.add(componentsInExhibit[exhibits[i].id]);
-		componentsInExhibit[exhibits[i].id].width = 0;
+		//$.componentScrollView.add(componentsInExhibit[exhibits[i].id]);
+		//componentsInExhibit[exhibits[i].id].width = 0;
+		
 	}
+	$.componentScrollView.add(componentsInExhibit[currExhibitId]);
 	componentsInExhibit[currExhibitId].width = Ti.UI.SIZE;
 }
 
 function getComponentImageHeight() {
 	//Fits height to available space on screen, unless pic would be more than a certain fraction (desiredMaxWidthProportion) of device width
-	var headingLabelViewHeight = stripUnitsOffMeasurement($.headingLabelView.height);
+	var headingLabelViewHeight = 0;//stripUnitsOffMeasurement($.headingLabelView.height);   //OBSOLETE
 	var componentScrollViewHeadingHeight = stripUnitsOffMeasurement($.componentScrollViewHeading.height);
 	var componentTitleLabelHeight = stripUnitsOffMeasurement(getComponentTitleLabelHeight());
 	var infoViewHeight = $.infoView.toImage().height;

@@ -244,10 +244,16 @@ function getAllPostsForGivenSectionName(sectionName, rawJson) {
 function addSpinner() {
 	spinner.addTo($.container);
 	spinner.show();
+	
+	Ti.API.log("componentLanding show spinner");
 }
 
 function hideSpinner() {
-	spinner.hide();
+	setTimeout(function(){
+		spinner.hide();
+	}, 200);
+	
+	Ti.API.log("componentLanding hide spinner");
 }
 
 function jackOfAllTrades() {

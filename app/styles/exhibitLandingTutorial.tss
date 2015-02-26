@@ -97,20 +97,27 @@
 	// bottom: "20dip"
 	transform: Alloy.Globals.rotate270,
 	height: "50dip",
-	left: "15dip",
-	top: "275dip",
+	left: "30dip", //"15dip",
+	top: "375dip", // "275dip",
 	width: "25dip"
 }
 
 "#ComponentsArrow[platform=android]":{
-	top: "300dip"
+	top: "325dip"
 }
 
-"#ComponentsArrow[formFactor=tablet]": {
+"#ComponentsArrow[platform=ios formFactor=tablet]": {
 	bottom: "75dip",
 	height: "75dip",
 	width: "60dip",
-	top: "615dip",
+	top: "660dip",
+	left: "50dip"
+}
+
+"#ComponentsArrow[platform=android formFactor=tablet]": {
+	height: "75dip",
+	width: "60dip",
+	top: "560dip",
 	left: "50dip"
 }
 
@@ -151,16 +158,22 @@
 
 "#ComponentsText": {
 	width: Ti.UI.FILL,
-	top: "300dip",
-	left: "60dip"
+	top: "375dip",
+	left: "75dip"
 }
 
 "#ComponentsText[platform=android]":{
 	top: "325dip"
 }
 
-"#ComponentsText[formFactor=tablet]": {
+"#ComponentsText[platform=ios formFactor=tablet]": {
 	top: "650dip",
+	right: "60dip",
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER
+}
+
+"#ComponentsText[platform=android formFactor=tablet]": {
+	top: "550dip",
 	right: "60dip",
 	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER
 }
@@ -181,9 +194,11 @@
 	bottom: "40dip",
 	width: "50%"
 }
+/*
 "#ExitButton[formFactor=tablet]": {
 	bottom: "150dip"
 }
+*/
 "#ExitButton[formFactor=handheld platform=android]": {
 	bottom: "50dip"
 }
@@ -192,10 +207,12 @@
 	bottom: "100dip",
 	width: "50%"
 }
+/*
 "#NextButton[formFactor=tablet]": {
 	top: null,
 	bottom: "210dip"
 }
+*/
 "#NextButton[formFactor=handheld platform=android]": {
 	bottom: "110dip"
 }

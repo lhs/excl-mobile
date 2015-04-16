@@ -19,6 +19,14 @@
 //=====================================================================
 
 function deviceDetectionService() {
+	var dpi;
+	
+	this.getDpi = function() {
+		if(dpi == undefined) {
+			dpi = Ti.Platform.displayCaps.getDpi();
+		}
+		return dpi;
+	};
 };
 
 deviceDetectionService.prototype.isTablet = function(diagonalInches) {
@@ -53,10 +61,6 @@ deviceDetectionService.prototype.getHeight = function() {
 
 deviceDetectionService.prototype.getWidth = function() {
 	return Ti.Platform.displayCaps.platformWidth;
-};
-
-deviceDetectionService.prototype.getDpi = function() {
-	return Ti.Platform.displayCaps.getDpi();
 };
 
 deviceDetectionService.prototype.dipToPx = function(dipSize){

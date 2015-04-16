@@ -21,7 +21,7 @@
 var args = arguments[0] || {};
 
 var json = Alloy.Globals.museumJSON;
-Ti.API.info('Exhibit landing initialized with: ' + json);
+// Ti.API.info('Exhibit landing initialized with: ' + json);
 
 var iconService = setPathForLibDirectory('customCalls/iconService');
 iconService = new iconService();
@@ -51,6 +51,8 @@ var currExhibitId;
 var expanderButton;
 var componentScrollViewLoaded = false;
 var componentImageWidthToHeight = 7.0/4;
+
+var strippedComponentTitleLabelHeight = 0;
 
 //Analytics Specific Information -------------------
 var analyticsPageTitle = "Exhibit Landing";
@@ -474,6 +476,13 @@ function getComponentTitleLabelHeight() {
 	
 }
 
+function getStrippedComponentTitleLabelHeight() {
+	if(strippedComponentTitleLabelHeight == 0) {
+		strippedComponentTitleLabelHeight = stripUnitsOffMeasurement(getComponentTitleLabelHeight());
+	}
+	return strippedComponentTitleLabelHeight;
+}
+
 function addFunctionalityToHeadingBar(exhibits) {
 	//OBSOLETE
 	/*
@@ -608,7 +617,7 @@ function createComponentsScrollView(exhibits) {
 		componentsInExhibit[exhibits[i].id] = Ti.UI.createView({
 			layout : 'horizontal',
 			horizontalWrap : false,
-			height : getComponentImageHeight() + stripUnitsOffMeasurement(getComponentTitleLabelHeight()),
+			height : getComponentImageHeight() + getStrippedComponentTitleLabelHeight(),
 			top: 0
 		});
 
@@ -636,7 +645,7 @@ function getComponentImageHeight() {
 	//Fits height to available space on screen, unless pic would be more than a certain fraction (desiredMaxWidthProportion) of device width
 	var headingLabelViewHeight = 0;//stripUnitsOffMeasurement($.headingLabelView.height);   //OBSOLETE
 	var componentScrollViewHeadingHeight = stripUnitsOffMeasurement($.componentScrollViewHeading.height);
-	var componentTitleLabelHeight = stripUnitsOffMeasurement(getComponentTitleLabelHeight());
+	var componentTitleLabelHeight = getStrippedComponentTitleLabelHeight();
 	var infoViewHeight = $.infoView.toImage().height;
 	if (OS_ANDROID) {
 		headingLabelViewHeight = detectDevice.dipToPx(headingLabelViewHeight);
@@ -682,17 +691,18 @@ function openComponent(e, componentImageUrl) {
 function createLabeledPicView(item) {
 
 	var imageHeight = getComponentImageHeight();
+	var imageWidth = getComponentImageWidth(imageHeight);
 
 	var itemContainer = Ti.UI.createView({
 		layout : "vertical",
 		height : Ti.UI.SIZE,
-		width : getComponentImageWidth(imageHeight),
+		width : imageWidth,
 		itemId : item.id
 	});
 
 	var image = Ti.UI.createImageView({
 		height : imageHeight,
-		width : getComponentImageWidth(imageHeight),
+		width : imageWidth,
 		itemId : item.id
 	});
 

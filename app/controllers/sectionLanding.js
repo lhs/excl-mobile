@@ -124,7 +124,7 @@ function organizePosts(allPosts) {
 	if (filterOn) {
 		updateFilterIdArray();
 		selectedFilters = filter.formatActiveFiltersIntoArray(Alloy.Collections.filter);
-		Ti.API.info("Filter list: " + JSON.stringify(selectedFilters));
+		// Ti.API.info.info("Filter list: " + JSON.stringify(selectedFilters));
 		if (JSON.stringify(selectedFilters) != "[]") {
 			dictOrderedPosts = createEmptyFilterKeysInOrderedPostsDict(dictOrderedPosts, selectedFilters);
 			for (var i = 0; i < allPosts.length; i++) {
@@ -133,22 +133,22 @@ function organizePosts(allPosts) {
 			if (JSON.stringify(dictOrderedPosts) == "{}") {
 				showDefaultError();
 			}
-			if (!dictOrderedPosts["0"]) {
-				dictOrderedPosts["0"] = [];
-			}
-		} else {
-			dictOrderedPosts["0"] = allPosts;
-		}
-	} else {
+			//if (!dictOrderedPosts["0"]) {
+			//	dictOrderedPosts["0"] = [];
+			//}
+		} //else {
+		//	dictOrderedPosts["0"] = allPosts;
+		//}
+	}// else {
 		dictOrderedPosts["0"] = allPosts;
-	}
+	//}
 	if (Alloy.Globals.adminModeController.isInKioskMode()) {
-		Ti.API.info("Removing posts that are excluded for kiosk mode");
+		// Ti.API.info.info("Removing posts that are excluded for kiosk mode");
 		dictOrderedPosts = removePostsThatAreHiddenInKioskMode(dictOrderedPosts);
 	}
 	insertXNumberOfButtons(filterTabIds.length);
-	Ti.API.info("Section Dict: " + JSON.stringify(dictOrderedPosts));
-	Ti.API.info("Parents: " + JSON.stringify(filterTabIds));
+	// Ti.API.info.info("Section Dict: " + JSON.stringify(dictOrderedPosts));
+	// Ti.API.info.info("Parents: " + JSON.stringify(filterTabIds));
 
 	var buttonHolderViewChildren = buttonHolderView.children.length;
 	filter.sortPostsIntoTabs(dictOrderedPosts, parentObjects, sectionIndex);
@@ -156,7 +156,7 @@ function organizePosts(allPosts) {
 		keepFirstViewOpen(secondView, secondButton);
 	}
 	$.scrollView.height = Ti.UI.SIZE;
-	Ti.API.info("Finished Sorting");
+	// Ti.API.info.info("Finished Sorting");
 }
 
 function updateFilterIdArray() {
@@ -164,7 +164,7 @@ function updateFilterIdArray() {
 	for (var i = 0; i < filters.length; i++) {
 		filterTabIds.push(filters[i].toString());
 	}
-	Ti.API.info("All tab ids: " + filterTabIds);
+	// Ti.API.info.info("All tab ids: " + filterTabIds);
 }
 
 function createEmptyFilterKeysInOrderedPostsDict(dictOrderedPosts, selectedFilters) {
@@ -175,7 +175,7 @@ function createEmptyFilterKeysInOrderedPostsDict(dictOrderedPosts, selectedFilte
 }
 
 function showDefaultError() {
-	Ti.API.info("Adding error");
+	// Ti.API.info.info("Adding error");
 	var objectArgs = {
 		top : "0",
 		height : "250dip",
@@ -295,7 +295,7 @@ function insertXNumberOfButtons(numberOfButtons) {
 		$.scrollView.add(view);
 
 		button.addEventListener('click', function(e) {
-			Ti.API.info("Visible view: " + JSON.stringify(e.source.viewAssociatedId));
+			// Ti.API.info.info("Visible view: " + JSON.stringify(e.source.viewAssociatedId));
 			changeButtonColor(e.source);
 			showRespectiveView(e.source);
 		});
@@ -305,7 +305,7 @@ function insertXNumberOfButtons(numberOfButtons) {
 	hideButtonViewIfOnlyOneButton(buttonHolderView, numberOfButtons);
 
 	for (var i = 0; i < parentObjects.length; i++) {
-		Ti.API.info("Added View (ID): " + JSON.stringify(parentObjects[i].id));
+		// Ti.API.info.info("Added View (ID): " + JSON.stringify(parentObjects[i].id));
 	}
 }
 

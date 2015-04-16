@@ -44,7 +44,7 @@ function filterService() {
 
 filterService.prototype.setAllInclusiveTabTitle = function(st) {
 	allInclusiveTabTitle = st;
-	errorEmptyTab = 'Looks like there is no unique content for this filter. It may have been moved to the "' + allInclusiveTabTitle + '" tab above, check there!';
+	errorEmptyTab = 'There is no content specific to this age.';
 };
 
 filterService.prototype.setSectionLandingObjects = function(ary) {
@@ -265,13 +265,14 @@ filterService.prototype.sortFilteredContentIntoDict = function(selectedFilters, 
 	var postFilterCategories = filterService.prototype.replaceEmptyArrayWithAllFilters(post.age_range, post.id);
 	postFilterCategories = filterService.prototype.parseStringIntoArray(postFilterCategories, ", ");
 	if (JSON.stringify(selectedFilters) != "[]") {
-		if (filterService.prototype.checkIfArrayInArray(selectedFilters, postFilterCategories)) {
+		/// CHANGING THIS SO EVERYTHING GOES UNDER "ALL" AND ALSO UNDER THE CATEGORIES WHERE IT BELONGS
+		/*if (filterService.prototype.checkIfArrayInArray(selectedFilters, postFilterCategories)) {
 			Ti.API.info("Post ID " + post.id + " has includes all of the selected filters. Add to 0.");
 			filterService.prototype.addItemArrayToDict("0", post, dictOrderedPosts);
 		} else if (filterService.prototype.checkIfArrayHasOnlyZero(postFilterCategories)) {
 			Ti.API.info("Post ID " + post.id + " has all possible filters. Add to 0.");
 			filterService.prototype.addItemArrayToDict("0", post, dictOrderedPosts);
-		} else {
+		} else {*/
 			for (var i = 0; i < selectedFilters.length; i++) {
 				var itemArray = filterService.prototype.sortPostIntoApplicableSection(postFilterCategories, selectedFilters[i], post);
 				if (Alloy.Models.app.get("customizeLearningEnabled")) {
@@ -282,7 +283,7 @@ filterService.prototype.sortFilteredContentIntoDict = function(selectedFilters, 
 					filterService.prototype.addItemArrayToDict("0", itemArray, dictOrderedPosts);
 				}
 			}
-		}
+		//}
 	}
 };
 

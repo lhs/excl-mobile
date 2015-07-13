@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>org.cmhouston.excl</id>
-    <name>ExCL</name>
+    <id>org.cmhouston.morecmh</id>
+    <name>More CMH</name>
     <version>1.3</version>
     <publisher>Children's Museum of Houston and the Regents of the University of California</publisher>
-    <url>http://</url>
-    <description>ExCL is a platform that enables museums to engage visitors at museum activities through the use of a mobile application.</description>
+    <url>http://www.cmhouston.org/</url>
+    <description>The Museum is introducing a new app as a digital learning tool for families to dig deeper into the hands-on, minds-on exhibits in the Children’s Museum of Houston. Unlike apps that focus on Museum hours and maps (which we do have), this app allows you to discover new challenges for our interactive exhibits.</description>
     <copyright>2015 by Children's Museum of Houston and the Regents of the University of California</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>b7ecc89e-dcbc-41dc-9f5a-801689b537fe</guid>
+    <guid>c4ceaac3-9d06-4573-9ccc-0ed8fe7e4893</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>
         <plist>
@@ -69,8 +69,25 @@
         <target device="mobileweb">false</target>
         <target device="tizen">false</target>
     </deployment-targets>
-    <sdk-version>3.5.0.GA</sdk-version>
+    <sdk-version>4.1.0.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
+    <property name="appc-app-id" type="string">55a42e6e987501dc1124ffc5</property>
+    <property name="acs-authbase-url-development" type="string">https://secure-identity.cloud.appcelerator.com</property>
+    <property name="acs-base-url-development" type="string">https://api.cloud.appcelerator.com</property>
+    <property name="acs-oauth-secret-development" type="string">pok0J2GCdXeiiHFA7WoegM5uEjZI6NcN</property>
+    <property name="acs-oauth-key-development" type="string">TfkH88M2TKzqz0sp8RrDfkPGCpYkwtbR</property>
+    <property name="acs-api-key-development" type="string">IaSxTQG7hOz0y3MEilt57u4qEvlkD1xm</property>
+    <property name="acs-username-development" type="string">appc_app_user_dev</property>
+    <property name="acs-password-development" type="string">hRLE1dTK1Nj120iq9D</property>
+    <property name="acs-authbase-url-production" type="string">https://secure-identity.cloud.appcelerator.com</property>
+    <property name="acs-base-url-production" type="string">https://api.cloud.appcelerator.com</property>
+    <property name="acs-oauth-secret-production" type="string">uvODfLg7y4baskjhfY370N62qRSGZxQM</property>
+    <property name="acs-oauth-key-production" type="string">WxWIvczfkGBp8SxjkVnnKZOqLxD2hg6C</property>
+    <property name="acs-api-key-production" type="string">mAirBqZG5hRqy2OwIzOG8W8NCrzQajXc</property>
+    <property name="acs-username-production" type="string">appc_app_user</property>
+    <property name="acs-password-production" type="string">C7eldWHrCRZghz4vBN</property>
+    <property name="appc-org-id" type="string">100047955</property>
+    <property name="appc-creator-user-id" type="string">ff159633-3187-4ff7-a1e7-05893f697329</property>
 </ti:app>

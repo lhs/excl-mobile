@@ -2,7 +2,7 @@
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <id>org.cmhouston.excl.omsi</id>
     <name>More OMSI</name>
-    <version>1.3.3</version>
+    <version>1.3.3.1</version>
     <publisher>Children's Museum of Houston and the Regents of the University of California</publisher>
     <url>http://</url>
     <description>ExCL is a platform that enables museums to engage visitors at museum activities through the use of a mobile application.</description>
@@ -10,7 +10,7 @@
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
-    <analytics>true</analytics>
+    <analytics>false</analytics>
     <guid>67fdf601-5f01-4f19-9666-a182dffb7bd5</guid>
     <property name="ti.ui.defaultunit" type="string">dp</property>
     <ios>

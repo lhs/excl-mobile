@@ -2,7 +2,7 @@
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <id>org.cmh.excl.lifeandscience</id>
     <name>MoreLifeAndScience</name>
-    <version>1.3.3.1</version>
+    <version>1.3.3.2</version>
     <publisher>Children's Museum of Houston and the Regents of the University of California</publisher>
     <url>http://</url>
     <description>ExCL is a platform that enables museums to engage visitors at museum activities through the use of a mobile application.</description>

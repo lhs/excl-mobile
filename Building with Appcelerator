@@ -1,0 +1,79 @@
+This is a very difficult and time consuming process.  Make sure to follow the xcl-cms’s instructions for building a Wordpress site:  
+
+https://github.com/lhs/excl-cmsLet’s begin!
+
+For this same file with illustrations, follow this link: https://docs.google.com/document/d/11ztKhSPN3O80yZojZAKNmkhq26VTwX_fGEaZ9w4Rr5w/edit?usp=sharing
+
+-install latest version of Appcelerator Studio software.
+
+-download all versions of apps from Git (there is a main branch and 4 sub branches)
+https://github.com/lhs/excl-mobile/branches
+
+-ensure (if on Mac) that developer certificate, distribution certificate, and provisioning profiles from Apple Member Center are properly installed.
+
+-Import project in Appcelerator
+open Appcelerator
+from Dashboard choose to “import an existing project”
+	from dialog choose Appcelerator > Existing Mobile Project
+	from dialog browse to project folder (downloaded and unzipped from Git), leave default settings and choose “finish”
+	more on migrating a project to the new appcelerator
+	https://web.appcelerator.com/product/migrate-app
+	if you see the following “error importing: missing Titanium SDK”, this can be fixed by installing the titanium SDK
+	may see this warning: “warning: tiapp.xml “sdk-version” will be updated to comply with the latest installed titanium SDK”, this should be ok, just changes the tiapp.xml file
+
+install Android SDK
+	install JDK
+	install Android SDK (unzip, drop in home dir)
+	install Android packages
+	in Appcelerator browse to preferences>studio>platforms>Android and point Android SDK Home at location where Android SDK was unzipped and copied
+
+-projects appear in Project Explorer panel on left, select desired project to modify and debug
+
+
+
+BUILD iOS
+-when ready in the upper left corner near the green play button, set the menus to Package and iOS itunes store
+
+-a build popup will appear (if not, press green play button)
+
+-in popup dialog make sure the correct certificate and provisioning profiles are selected
+
+-once build is finished, an Xcode project will be created inside of the project folder in the build/iphone folder.  
+
+-open the xcode project in xcode
+
+-in xcode an archive of the project will already be created, open any project in xcode and from the menu select window>organizer
+
+-in the organizer dialog, look for the correct project on the left.  Select the desired project.
+
+-choose the latest archive of the application and select “Submit to App Store” on the right
+
+
+Make sure the proper certificates are selected from the “Certificates” panel.
+
+
+Make sure the proper provisioning profile is set (provisioning profiles are downloaded from the Apple Member Center):
+
+
+You may see dialog boxes asking for permission to access your keychain.  Press “Allow” or “Always Allow.”
+
+
+
+BUILD ANDROID
+-when ready in the upper left corner near the green play button, set the menus to Package and Android App store
+
+-a build popup will appear (if not, press green play button)
+
+-in popup dialog make sure the keystore information is correctly filled in:
+ distribution location: where you want the final APK to be located
+ keystore location: where the keystore file is (this file is needed to build and must be located somewhere locally on your computer)
+ keystore password: 1615.binZ
+ keypair password: 1615.binZ
+ key alias: morecmhkey
+
+-once build is finished, an APK will be created in the distribution location folder.  
+
+-Upload the APK to the google play store
+
+
+
